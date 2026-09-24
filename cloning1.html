@@ -6,3 +6,115 @@
 <h1>hi vijeth</h1>
 </body>
 </html>
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>To the Power of Math!</title>
+
+    <!-- Styling for the client UI -->
+    <style>
+        h1 {
+            color: #FFFFFF;
+            font-family: system-ui;
+            margin-left: 20px;
+        }
+        body {
+            background-color: #222629;
+        }
+        label {
+            color: #4a32c2;
+            font-family: system-ui;
+            font-size: 20px;
+            margin-left: 20px;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #3237c2;
+            border-color: #326ec2;
+            color: #FFFFFF;
+            font-family: system-ui;
+            font-size: 20px;
+            font-weight: bold;
+            margin-left: 30px;
+            margin-top: 20px;
+            width: 140px;
+            padding: 8px;
+        }
+        input {
+            color: #222629;
+            font-family: system-ui;
+            font-size: 20px;
+            margin-left: 10px;
+            margin-top: 20px;
+            width: 100px;
+        }
+    </style>
+
+    <script>
+        // callAPI function that takes the base and exponent numbers as parameters
+        var callAPI = (num1, num2) => {
+
+            // Create headers object
+            var myHeaders = new Headers();
+
+            // Add content type header
+            myHeaders.append("Content-Type", "application/json");
+            // Convert object to JSON string
+            var raw = JSON.stringify({
+                "num1": num1,
+                "num2": num2
+            });
+            // Create request options
+            var requestOptions = {
+                method: "POST",
+                headers: myHeaders,
+                body: raw,
+                redirect: "follow"
+            };
+            // Make API call
+            fetch(
+                "https://lum2iom0ee.execute-api.eu-north-1.amazonaws.com/dev",
+                requestOptions
+            )
+                .then(response => response.text())
+                .then(result => {
+                    alert(JSON.parse(result).body);
+                })
+                .catch(error => {
+                    console.log("error", error);
+                    alert("Something went wrong!");
+                });
+        };
+    </script>
+</head>
+<body>
+    <h1>TO THE POWER OF MATH!</h1>
+
+    <form>
+        <label>Number:</label>
+
+        <input type="text" id="num1">
+
+        <label>... to the power of:</label>
+
+        <input type="text" id="num2">
+
+        <button
+            type="button"
+            onclick="callAPI(
+                document.getElementById('num1').value,
+                document.getElementById('num2').value
+            )">
+            CALCULATE
+        </button>
+    </form>
+
+</body>
+</html>
+
+
